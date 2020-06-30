@@ -86,7 +86,15 @@
     NSURL *profilePicURL = [NSURL URLWithString:self.tweet.user.profilePicURLString];
     [self.userImage setImageWithURL:profilePicURL];
     self.name.text = self.tweet.user.name;
-    self.username.text = self.tweet.user.screenName;
+    
+    if (self.tweet.user.screenName != nil) {
+        NSString *atSym = @"@";
+        self.username.text = [atSym stringByAppendingString:self.tweet.user.screenName];
+    }
+    else {
+        self.username.text = @"";
+    }
+    
     self.date.text = self.tweet.timeAgoString;
     self.tweetLabel.text = self.tweet.text;
     
