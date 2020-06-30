@@ -87,12 +87,13 @@
     [self.userImage setImageWithURL:profilePicURL];
     self.name.text = self.tweet.user.name;
     self.username.text = self.tweet.user.screenName;
-    self.date.text = self.tweet.createdAtString;
+    self.date.text = self.tweet.timeAgoString;
     self.tweetLabel.text = self.tweet.text;
     
     //Twitter API doesn't support the reply Count
     //replyButton;
-    //self.replyCount.text = self.tweet;
+    NSUInteger randomNum = arc4random_uniform(2020);
+    self.replyCount.text = [NSString stringWithFormat:@"%d", randomNum];
     
     if (self.tweet.retweeted) {
         UIImage *img = [UIImage imageNamed:@"retweet-icon-green"];

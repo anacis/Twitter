@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,6 +20,7 @@
 		944D754624AA7CBC008AF070 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 944D754524AA7CBC008AF070 /* User.m */; };
 		944D754924AA94DB008AF070 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 944D754824AA94DB008AF070 /* Tweet.m */; };
 		944D754C24AAA583008AF070 /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 944D754B24AAA583008AF070 /* TweetCell.m */; };
+		9480707324ABE094003D3CDF /* TweetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9480707224ABE094003D3CDF /* TweetViewController.m */; };
 		94C5626124AAC32E006D5E4C /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94C5626024AAC32E006D5E4C /* ComposeViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,8 @@
 		944D754824AA94DB008AF070 /* Tweet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		944D754A24AAA583008AF070 /* TweetCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
 		944D754B24AAA583008AF070 /* TweetCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
+		9480707124ABE094003D3CDF /* TweetViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TweetViewController.h; sourceTree = "<group>"; };
+		9480707224ABE094003D3CDF /* TweetViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TweetViewController.m; sourceTree = "<group>"; };
 		94C5625F24AAC32E006D5E4C /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		94C5626024AAC32E006D5E4C /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +152,8 @@
 				6AD2790820BCC04D0085BC29 /* TimelineViewController.m */,
 				94C5625F24AAC32E006D5E4C /* ComposeViewController.h */,
 				94C5626024AAC32E006D5E4C /* ComposeViewController.m */,
+				9480707124ABE094003D3CDF /* TweetViewController.h */,
+				9480707224ABE094003D3CDF /* TweetViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 				6AD278D120BC4B950085BC29 /* Sources */,
 				6AD278D220BC4B950085BC29 /* Frameworks */,
 				6AD278D320BC4B950085BC29 /* Resources */,
+				C85D6D0ADD7CC7F8D1BFC43E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -247,6 +253,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C85D6D0ADD7CC7F8D1BFC43E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-twitter/Pods-twitter-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -259,6 +282,7 @@
 				944D754624AA7CBC008AF070 /* User.m in Sources */,
 				94C5626124AAC32E006D5E4C /* ComposeViewController.m in Sources */,
 				6AD278E820BC4B970085BC29 /* main.m in Sources */,
+				9480707324ABE094003D3CDF /* TweetViewController.m in Sources */,
 				944D754924AA94DB008AF070 /* Tweet.m in Sources */,
 				6AD2790620BCC0380085BC29 /* LoginViewController.m in Sources */,
 				6AD278DA20BC4B950085BC29 /* AppDelegate.m in Sources */,
