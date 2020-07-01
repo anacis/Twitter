@@ -549,6 +549,17 @@
                         <viewLayoutGuide key="safeArea" id="dZq-c3-A63"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="3q8-ly-RcQ"/>
+                    <connections>
+                        <outlet property="bannerImage" destination="Ryt-Bq-dra" id="CZR-Kq-5Qq"/>
+                        <outlet property="followerCount" destination="vhx-oD-GrW" id="5QA-ru-G9t"/>
+                        <outlet property="followingCount" destination="GEh-sG-TCh" id="yve-CJ-0s7"/>
+                        <outlet property="memberSinceLabel" destination="mta-gA-A4j" id="nhd-ws-UfD"/>
+                        <outlet property="nameLabel" destination="0ai-mJ-H8W" id="WGg-7g-97H"/>
+                        <outlet property="profileImage" destination="X7E-HS-Tqk" id="cpR-hO-ohD"/>
+                        <outlet property="taglineLabel" destination="Bom-fG-sAV" id="miS-sH-raD"/>
+                        <outlet property="tweetCount" destination="WQj-sX-b8v" id="4K9-qY-J1M"/>
+                        <outlet property="usernameLabel" destination="4lT-cf-klr" id="36m-6F-dG7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KBK-Zn-wCb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

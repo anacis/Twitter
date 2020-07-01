@@ -75,6 +75,35 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
    }];
 }
 
+- (void)getUserProfileData:(void(^)(User *user, NSError *error))completion {
+    
+    //TODO: change this GET call to get profile data
+    [self GET:@"1.1/account/verify_credentials.json"
+    parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDictionary) {
+       
+       // Manually cache the tweets. If the request fails, restore from cache if possible.
+       NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDictionary];
+       [[NSUserDefaults standardUserDefaults] setValue:data forKey:@"profile_data"];
+
+       // Success
+        NSLog(@"%@", userDictionary);
+       User *user  = [[User alloc] initWithDictionary:userDictionary];
+       completion(user, nil);
+       
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       
+       User *user = nil;
+       
+       // Fetch tweets from cache if possible
+       NSData *data = [[NSUserDefaults standardUserDefaults] valueForKey:@"profile_data"];
+       if (data != nil) {
+           user = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+       }
+       
+       completion(user, error);
+   }];
+}
+
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};

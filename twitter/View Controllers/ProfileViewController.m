@@ -7,8 +7,21 @@
 //
 
 #import "ProfileViewController.h"
+#import "APIManager.h"
+#import "User.h"
+#import "UIImageView+AFNetworking.h"
 
 @interface ProfileViewController ()
+@property (nonatomic, strong) User *user;
+@property (weak, nonatomic) IBOutlet UIImageView *bannerImage;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *followingCount;
+@property (weak, nonatomic) IBOutlet UILabel *followerCount;
+@property (weak, nonatomic) IBOutlet UILabel *taglineLabel;
+@property (weak, nonatomic) IBOutlet UILabel *memberSinceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *tweetCount;
 
 @end
 
@@ -16,7 +29,50 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getProfileData];
     // Do any additional setup after loading the view.
+}
+
+- (void)getProfileData {
+    [[APIManager shared] getUserProfileData:^(User *user, NSError *error) {
+        if (error == nil) {
+            //self.tweets = (NSMutableArray *) tweets;
+            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            self.user = user;
+            [self setUpProfile];
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+        }
+    }];
+}
+
+- (void)setUpProfile {
+    NSURL *profilePicURL = [NSURL URLWithString:self.user.profilePicURLString];
+    [self.profileImage setImageWithURL:profilePicURL];
+    
+    NSURL *bannerPicURL = [NSURL URLWithString:self.user.bannerPicURLString];
+    [self.bannerImage setImageWithURL:bannerPicURL];
+    
+    self.nameLabel.text = self.user.name;
+    
+    if (self.user.screenName != nil) {
+        NSString *atSym = @"@";
+        self.usernameLabel.text = [atSym stringByAppendingString:self.user.screenName];
+    }
+    else {
+        self.usernameLabel.text = @"";
+    }
+    
+    self.taglineLabel.text = self.user.tagline;
+    
+    self.followerCount.text = self.user.followerCount;
+    
+    self.followingCount.text = self.user.followingCount;
+    
+    self.tweetCount.text = self.user.tweetCount;
+    
+    self.memberSinceLabel.text = self.user.memberSince;
+    
 }
 
 /*
