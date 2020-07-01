@@ -14,6 +14,7 @@
 #import "ComposeViewController.h"
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import "TweetViewController.h"
 
 @interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
@@ -87,9 +88,22 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UINavigationController *navigationController = [segue destinationViewController];
-    ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-    composeController.delegate = self;
+    if ([[segue identifier] isEqualToString:@"ComposeViewController"]) {
+
+        UINavigationController *navigationController = [segue destinationViewController];
+        ComposeViewController *composeController = (ComposeViewController *) navigationController.topViewController;
+        composeController.delegate = self;
+    }
+    else if ([[segue identifier] isEqualToString:@"TweetViewController"]) {
+        NSLog(@"Going to Details Page");
+        UITableViewCell *tappedCell = sender;
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:tappedCell];
+        Tweet *tweet = self.tweets[indexPath.row];
+        NSLog(@"%@", self.tweets);
+        
+        TweetViewController *tweetViewController = [segue destinationViewController];
+        tweetViewController.tweet = tweet;
+    }
 }
 
 - (void)didTweet:(Tweet *)tweet {
@@ -106,5 +120,7 @@
     
     [[APIManager shared] logout];
 }
+
+
 
 @end

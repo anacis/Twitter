@@ -101,7 +101,7 @@
     //Twitter API doesn't support the reply Count
     //replyButton;
     NSUInteger randomNum = arc4random_uniform(2020);
-    self.replyCount.text = [NSString stringWithFormat:@"%d", randomNum];
+    self.replyCount.text = [NSString stringWithFormat:@"%lu", randomNum];
     
     if (self.tweet.retweeted) {
         UIImage *img = [UIImage imageNamed:@"retweet-icon-green"];
