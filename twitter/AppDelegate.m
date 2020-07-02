@@ -20,8 +20,14 @@
     
     if ([[APIManager shared] isAuthorized]) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"TweetsNavigationController"];
-        self.window.rootViewController = navigationController;
+        if ([APIManager shared].session) {
+            UINavigationController *tabBarController = [storyboard instantiateViewControllerWithIdentifier:@"MainTabBarController"];
+            self.window.rootViewController = tabBarController;
+        }
+        else {
+            UINavigationController *navigationController = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationController"];
+            self.window.rootViewController = navigationController;
+        }
     }
     
     return YES;
@@ -54,5 +60,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)changeRootViewController:(UIViewController*)vc : (BOOL)animated {
+    self.window.rootViewController = vc;
+}
 
 @end

@@ -78,7 +78,8 @@
     if (!self.tweet.favorited) {
         self.tweet.favorited = YES;
         self.tweet.favoriteCount += 1;
-        [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        NSString *urlString = @"1.1/favorites/create.json";
+        [[APIManager shared] updateTweetStatus:self.tweet urlString:urlString completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
             }
@@ -90,7 +91,8 @@
     else {
         self.tweet.favorited = NO;
         self.tweet.favoriteCount -= 1;
-        [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        NSString *urlString = @"1.1/favorites/destroy.json";
+        [[APIManager shared] updateTweetStatus:self.tweet urlString:urlString completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error favoriting tweet: %@", error.localizedDescription);
             }
@@ -98,6 +100,8 @@
                 NSLog(@"Successfully unfavorited the following Tweet: %@", tweet.text);
             }
         }];
+        
+        
     }
     
     [self refreshData];
@@ -107,7 +111,8 @@
     if (!self.tweet.retweeted) {
         self.tweet.retweeted = YES;
         self.tweet.retweetCount += 1;
-        [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        NSString *urlString = @"1.1/statuses/retweet.json";
+        [[APIManager shared] updateTweetStatus:self.tweet urlString:urlString completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
             }
@@ -119,7 +124,8 @@
     else {
         self.tweet.retweeted = NO;
         self.tweet.retweetCount -= 1;
-        [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
+        NSString *urlString = @"1.1/statuses/unretweet.json";
+        [[APIManager shared] updateTweetStatus:self.tweet urlString:urlString completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error unretweeting tweet: %@", error.localizedDescription);
             }

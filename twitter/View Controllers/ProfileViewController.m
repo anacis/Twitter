@@ -34,7 +34,7 @@
 }
 
 - (void)getProfileData {
-    [[APIManager shared] getUserProfileData:^(User *user, NSError *error) {
+    [[APIManager shared] getMyUserProfileData:^(User *user, NSError *error) {
         if (error == nil) {
             //self.tweets = (NSMutableArray *) tweets;
             NSLog(@"😎😎😎 Successfully loaded home timeline");

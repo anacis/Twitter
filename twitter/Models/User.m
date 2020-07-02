@@ -30,11 +30,10 @@
         // Configure the input format to parse the date string
         formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
         NSDate *date = [formatter dateFromString:self.memberSince];
-        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.dateStyle = NSDateFormatterMediumStyle;
         formatter.timeStyle = NSDateFormatterNoStyle;
         // Convert Date to String
         self.memberSince = [formatter stringFromDate:date];
-        
         
         
         // Initialize any other properties

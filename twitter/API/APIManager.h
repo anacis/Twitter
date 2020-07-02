@@ -18,15 +18,9 @@
 
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion;
 
-- (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
+- (void)updateTweetStatus:(Tweet *)tweet urlString:(NSString *)urlString completion:(void (^)(Tweet *, NSError *))completion;
 
-- (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
-
-- (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
-
-- (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion;
-
-- (void)getUserProfileData:(void(^)(User *user, NSError *error))completion;
+- (void)getMyUserProfileData:(void(^)(User *user, NSError *error))completion;
 
 
 @end

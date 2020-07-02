@@ -92,6 +92,7 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    //TODO: make this a switch case block
     if ([[segue identifier] isEqualToString:@"ComposeViewController"]) {
 
         UINavigationController *navigationController = [segue destinationViewController];
@@ -119,7 +120,7 @@
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
         
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginNavigationViewController"];
     appDelegate.window.rootViewController = loginViewController;
     
     [[APIManager shared] logout];

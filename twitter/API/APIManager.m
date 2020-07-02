@@ -75,13 +75,12 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
    }];
 }
 
-- (void)getUserProfileData:(void(^)(User *user, NSError *error))completion {
+- (void)getMyUserProfileData:(void(^)(User *user, NSError *error))completion {
     
-    //TODO: change this GET call to get profile data
     [self GET:@"1.1/account/verify_credentials.json"
     parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDictionary) {
        
-       // Manually cache the tweets. If the request fails, restore from cache if possible.
+       // Manually cache the profile. If the request fails, restore from cache if possible.
        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:userDictionary];
        [[NSUserDefaults standardUserDefaults] setValue:data forKey:@"profile_data"];
 
@@ -104,6 +103,24 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
    }];
 }
 
+- (void)getOtherUserProfileData:(NSString *)text completion:(void(^)(User *user, NSError *error))completion {
+    NSDictionary *parameters = @{@"id": text};
+    
+    [self GET:@"1.1/users/show.json"
+    parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable userDictionary) {
+
+       // Success
+        NSLog(@"%@", userDictionary);
+       User *user  = [[User alloc] initWithDictionary:userDictionary];
+       completion(user, nil);
+       
+   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+       
+       User *user = nil;
+       completion(user, error);
+   }];
+}
+
 - (void)postStatusWithText:(NSString *)text completion:(void (^)(Tweet *, NSError *))completion{
     NSString *urlString = @"1.1/statuses/update.json";
     NSDictionary *parameters = @{@"status": text};
@@ -116,44 +133,11 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
     }];
 }
 
-- (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
 
-    NSString *urlString = @"1.1/favorites/create.json";
-    NSDictionary *parameters = @{@"id": tweet.idStr};
-    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
-        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
-        completion(tweet, nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(nil, error);
-    }];
-}
+//TODO: condense all of these into one changeTweetStatus function that takes in the urlString as a parameter
+- (void)updateTweetStatus:(Tweet *)tweet urlString:(NSString *)urlString completion:(void (^)(Tweet *, NSError *))completion{
 
-- (void)unfavorite:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
-
-    NSString *urlString = @"1.1/favorites/destroy.json";
-    NSDictionary *parameters = @{@"id": tweet.idStr};
-    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
-        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
-        completion(tweet, nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(nil, error);
-    }];
-}
-
-- (void)retweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
-
-    NSString *urlString = @"1.1/statuses/retweet.json";
-    NSDictionary *parameters = @{@"id": tweet.idStr};
-    [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
-        Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
-        completion(tweet, nil);
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        completion(nil, error);
-    }];
-}
-
-- (void)unretweet:(Tweet *)tweet completion:(void (^)(Tweet *, NSError *))completion{
-    NSString *urlString = @"1.1/statuses/unretweet.json";
+    //NSString *urlString = @"1.1/favorites/create.json";
     NSDictionary *parameters = @{@"id": tweet.idStr};
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];
