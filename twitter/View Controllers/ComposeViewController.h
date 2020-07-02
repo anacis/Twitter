@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import "User.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ComposeViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
+@property (nonatomic, strong) User *user;
 @end
 
 

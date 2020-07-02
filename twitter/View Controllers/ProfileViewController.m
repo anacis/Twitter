@@ -12,7 +12,6 @@
 #import "UIImageView+AFNetworking.h"
 
 @interface ProfileViewController ()
-@property (nonatomic, strong) User *user;
 @property (weak, nonatomic) IBOutlet UIImageView *bannerImage;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImage;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -29,19 +28,34 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getProfileData];
+    if (self.user == nil) {
+        [self getProfileData];
+    } else {
+        [self setUpProfile];
+    }
+    
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.user == nil) {
+        [self getProfileData];
+    } else {
+        [self setUpProfile];
+    }
+    
 }
 
 - (void)getProfileData {
     [[APIManager shared] getMyUserProfileData:^(User *user, NSError *error) {
         if (error == nil) {
             //self.tweets = (NSMutableArray *) tweets;
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            NSLog(@"Got my user data!");
             self.user = user;
             [self setUpProfile];
         } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+            NSLog(@"😫😫😫 Error my profile data: %@", error.localizedDescription);
         }
     }];
 }

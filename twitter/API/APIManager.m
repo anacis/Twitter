@@ -90,7 +90,7 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
        completion(user, nil);
        
    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-       
+       NSLog(@"%@", error);
        User *user = nil;
        
        // Fetch tweets from cache if possible
@@ -136,8 +136,7 @@ static NSString * const consumerSecret = @"chtKPchwba8bFe9kYSR1fQwdCgwL9ksOyExVH
 
 //TODO: condense all of these into one changeTweetStatus function that takes in the urlString as a parameter
 - (void)updateTweetStatus:(Tweet *)tweet urlString:(NSString *)urlString completion:(void (^)(Tweet *, NSError *))completion{
-
-    //NSString *urlString = @"1.1/favorites/create.json";
+    
     NSDictionary *parameters = @{@"id": tweet.idStr};
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {
         Tweet *tweet = [[Tweet alloc]initWithDictionary:tweetDictionary];

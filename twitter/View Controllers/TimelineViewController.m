@@ -15,8 +15,9 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "TweetViewController.h"
+#import "ProfileViewController.h"
 
-@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, TweetCellDelegate >
 
 @property (strong, nonatomic) NSMutableArray *tweets;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -64,6 +65,7 @@
     
     Tweet *tweet = self.tweets[indexPath.row];
     cell.tweet = tweet;
+    cell.delegate = self;
     
     [cell refreshData];
     
@@ -92,12 +94,12 @@
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    //TODO: make this a switch case block
     if ([[segue identifier] isEqualToString:@"ComposeViewController"]) {
 
         UINavigationController *navigationController = [segue destinationViewController];
         ComposeViewController *composeController = (ComposeViewController *) navigationController.topViewController;
         composeController.delegate = self;
+        
     }
     else if ([[segue identifier] isEqualToString:@"TweetViewController"]) {
         NSLog(@"Going to Details Page");
@@ -109,11 +111,21 @@
         TweetViewController *tweetViewController = [segue destinationViewController];
         tweetViewController.tweet = tweet;
     }
+    else if ([[segue identifier] isEqualToString:@"profileSegue"]) {
+        NSLog(@"Going to Details Page");
+         ProfileViewController *profileController = [segue destinationViewController];
+        profileController.user = sender;
+    }
 }
 
 - (void)didTweet:(Tweet *)tweet {
     [self.tweets insertObject:tweet atIndex:0];
     [self.tableView reloadData];
+}
+
+- (void)tweetCell:(TweetCell *)tweetCell didTap:(User *)user{
+    [self.tableView reloadData];
+    [self performSegueWithIdentifier:@"profileSegue" sender:user];
 }
 
 - (IBAction)logout:(id)sender {
@@ -125,6 +137,7 @@
     
     [[APIManager shared] logout];
 }
+
 
 
 

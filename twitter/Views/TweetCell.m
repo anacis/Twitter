@@ -15,6 +15,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+     UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.userImage addGestureRecognizer:profileTapGestureRecognizer];
+    [self.userImage setUserInteractionEnabled:YES];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -88,6 +91,10 @@
     [self refreshData];
 }
 
+- (void) didTapUserProfile:(UITapGestureRecognizer *)sender{
+    [self.delegate tweetCell:self didTap:self.tweet.user];
+}
+
 - (void)refreshData {
     NSURL *profilePicURL = [NSURL URLWithString:self.tweet.user.profilePicURLString];
     [self.userImage setImageWithURL:profilePicURL];
@@ -132,4 +139,8 @@
     self.favorCount.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     //messageImage;
 }
+
+
+
+
 @end
